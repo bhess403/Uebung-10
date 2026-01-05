@@ -1,7 +1,7 @@
 package h1;
 
 public class Grid {
-    Cell[][] gridArray;
+    private Cell[][] gridArray;
 
     public Grid(Cell[] cells, int gridRows, int gridCols) {
         gridArray = new Cell[gridRows][gridCols];
@@ -21,6 +21,20 @@ public class Grid {
             }
         }
 
+        for (int i = 0; i < gridRows; i++) {
+            for (int j = 0; j < gridCols; j++) {
+                gridArray[i][j].countLivingNeighbors(gridArray);
+            }
+        }
+
+    }
+
+    public Cell[][] getGridArray() {
+        return gridArray;
+    }
+
+    public void setGridArray(Cell[][] gridArray) {
+        this.gridArray = gridArray;
     }
 
     public void computeNextGen() {
@@ -39,18 +53,7 @@ public class Grid {
 
     public void computeGeneration(int n) {
         for (int k = 0; k < n; k++) {
-            for (int i = 0; i < gridArray.length; i++) {
-                for (int j = 0; j < gridArray[i].length; j++) {
-                    gridArray[i][j].countLivingNeighbors(gridArray);
-                }
-            }
-
-            for (int i = 0; i < gridArray.length; i++) {
-                for (int j = 0; j < gridArray[i].length; j++) {
-                    gridArray[i][j].setAlive(gridArray[i][j].isAliveNextGen());
-                }
-            }
+            computeNextGen();
         }
     }
-
 }
